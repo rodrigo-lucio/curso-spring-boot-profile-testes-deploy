@@ -32,6 +32,10 @@ import br.com.alura.forum.controller.form.TopicoForm;
 import br.com.alura.forum.modelo.Topico;
 import br.com.alura.forum.repository.CursoRepository;
 import br.com.alura.forum.repository.TopicoRepository;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/topicos")
@@ -43,20 +47,27 @@ public class TopicosController {
 	@Autowired
 	private CursoRepository cursoRepository;
 	
+	@ApiOperation(value = "Listar tópicos")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "titulo", dataType = "string", paramType = "query", value = "Título do tópico"),
+			@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Página desejada", defaultValue = "0"),
+			@ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Quantidade de registros por página", defaultValue = "10"),
+			@ApiImplicitParam(name = "sort", dataType = "string", paramType = "query", value = "Campo para ordenação", defaultValue = "dataCriacao,desc") })
 	@GetMapping
 	@Cacheable(value = "listaDeTopicos")
-	public Page<TopicoDto> lista(@RequestParam(required = false) String nomeCurso, 
-			@PageableDefault(sort = "dataCriacao", direction = Direction.DESC, page = 0, size = 10) Pageable paginacao) {
+	public Page<Topico> lista(@RequestParam(required = false) String titulo, 
+			@ApiIgnore @PageableDefault(sort = "dataCriacao", direction = Direction.DESC, page = 0, size = 10) Pageable paginacao) {
 		
-		if (nomeCurso == null) {
+		if (titulo == null) {
 			Page<Topico> topicos = topicoRepository.findAll(paginacao);
-			return TopicoDto.converter(topicos);
+			return topicos;
 		} else {
-			Page<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso, paginacao);
-			return TopicoDto.converter(topicos);
+			Page<Topico> topicos = topicoRepository.findByTituloContaining(titulo, paginacao);
+			return topicos;
 		}
 	}
 	
+	@ApiOperation(value = "Cadastrar tópico (cadastra o curso automaticamente caso não existir)")
 	@PostMapping
 	@Transactional
 	@CacheEvict(value = "listaDeTopicos", allEntries = true)
@@ -68,6 +79,7 @@ public class TopicosController {
 		return ResponseEntity.created(uri).body(new TopicoDto(topico));
 	}
 	
+	@ApiOperation(value = "Buscar pelo ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<DetalhesDoTopicoDto> detalhar(@PathVariable Long id) {
 		Optional<Topico> topico = topicoRepository.findById(id);
@@ -78,6 +90,7 @@ public class TopicosController {
 		return ResponseEntity.notFound().build();
 	}
 	
+	@ApiOperation(value = "Atualizar pelo ID")
 	@PutMapping("/{id}")
 	@Transactional
 	@CacheEvict(value = "listaDeTopicos", allEntries = true)
@@ -91,6 +104,7 @@ public class TopicosController {
 		return ResponseEntity.notFound().build();
 	}
 	
+	@ApiOperation(value = "Remover pelo ID (Apenas moderadores)")
 	@DeleteMapping("/{id}")
 	@Transactional
 	@CacheEvict(value = "listaDeTopicos", allEntries = true)

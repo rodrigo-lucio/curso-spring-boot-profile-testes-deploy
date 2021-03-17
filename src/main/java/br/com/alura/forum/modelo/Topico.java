@@ -10,8 +10,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Topico {
@@ -23,8 +26,10 @@ public class Topico {
 	private LocalDateTime dataCriacao = LocalDateTime.now();
 	@Enumerated(EnumType.STRING)
 	private StatusTopico status = StatusTopico.NAO_RESPONDIDO;
+	@JsonIgnore
 	@ManyToOne
 	private Usuario autor;
+	@JoinColumn(name = "curso_id")
 	@ManyToOne
 	private Curso curso;
 	@OneToMany(mappedBy = "topico")
