@@ -38,8 +38,11 @@ public class TopicoForm {
 			Curso cursoNovo = new Curso();
 			cursoNovo.setNome(nomeCurso);
 			cursoRepository.save(cursoNovo);
+			return new Topico(titulo, mensagem, cursoNovo);
 		}
 		return new Topico(titulo, mensagem, curso);
+		
+		
 	}
 
 }
