@@ -15,6 +15,6 @@
   "senha": "123456"
 }
 ```
-- Obs: Aguarde alguns minutos
+- Obs: Serviços gratuitos do Heroku dormem quando não utilizados, e tem um delay para responder a primeira requisição. 
 - Demais endpoints estão disponíveis na documentação: https://forum-rodrigo.herokuapp.com/swagger-ui.html
 - Usuário "moderador@gmail.com" com a senha 123456, possui permissão extra de excluir um tópico, diferente de um usuário aluno.
