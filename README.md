@@ -15,5 +15,6 @@
   "senha": "123456"
 }
 ```
+- Obs: Aguarde alguns minutos
 - Demais endpoints estão disponíveis na documentação: https://forum-rodrigo.herokuapp.com/swagger-ui.html
 - Usuário "moderador@gmail.com" com a senha 123456, possui permissão extra de excluir um tópico, diferente de um usuário aluno.
