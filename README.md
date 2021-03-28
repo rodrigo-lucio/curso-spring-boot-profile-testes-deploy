@@ -1,13 +1,13 @@
-## Curso: Spring Boot e Teste: Profiles, Testes e Deploy 
+## 💻 Curso: Spring Boot e Teste: Profiles, Testes e Deploy 
 - Código desenvolvido durante o curso "Spring Boot e Teste: Profiles, Testes e Deploy" da Alura	
 - Case de uma API para um fórum.
 - OBS: Projeto continado a partir do curso: "Spring Boot API Rest: Segurança da API, Cache e Monitoramento". O repositório deste você encontra [aqui](https://github.com/rodrigo-lucio/curso-spring-boot-seguranca-cache-monitoramento). 
-## Conteúdos
+## :books: Conteúdos
 - Autorização baseada em roles	 
 - Profiles
 - Testes automatizados
 - Deploy com Docker e na nuvem
-## Endpoints do Deploy:
+## ▶️ Endpoints do Deploy:
 - Para obter o token de acesso JWT, você pode enviar um POST para o endpoint: https://forum-rodrigo.herokuapp.com/login com as seguintes credenciais: 
 ```
 {
